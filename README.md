@@ -39,7 +39,3 @@ A collection of mods for **The Last Spell** that expands Oraculum progression, i
 **Steam users:** To find the game folder, right-click *The Last Spell* in your Library and select **Manage → Browse local files**.
 
 **Uninstall:** Remove the corresponding `.dll` files from `BepInEx/plugins/`.
-
----
-
-*Unofficial community project. Not affiliated with Ishtar Games or The Arcade Crew.*
