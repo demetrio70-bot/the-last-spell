@@ -10,15 +10,15 @@ A collection of mods for **The Last Spell** that expands Oraculum progression, i
 
 ### Included plugins
 
-| DLL | Description |
+| **DLL** | **Description** |
 | --- | --- |
-| `AttributeRarity.dll` | Expands Oraculum attribute-rarity progression |
-| `AttributeRerolls.dll` | Expands Oraculum attribute reroll progression |
+| `AttributeRarity.dll` | Improves Oraculum attribute-rarity progression |
+| `AttributeRerolls.dll` | Expands attribute reroll options through Oraculum upgrades |
 | `AttributeWeight.dll` | Rebalances the weights of individual attributes |
 | `BallistaKillReport.dll` | Displays ballista kill information |
-| `BallistaUpgrade.dll` | Expands Oraculum ballista upgrade progression |
-| `FairCorpses.dll` | Expands Oraculum corpse-generation progression |
-| `ItemRarity.dll` | Expands Oraculum item-rarity progression |
+| `BallistaUpgrade.dll` | Adds a new level to the Oraculum ballista upgrade |
+| `FairCorpses.dll` | Adds new Oraculum upgrades for corpse generation |
+| `ItemRarity.dll` | Improves Oraculum item-rarity progression |
 | `ItemWeight.dll` | Rebalances item weights |
 | `ProtanDangerOverlay.dll` | Adds a color-vision accessibility overlay |
 | `SharedExperienceBalance.dll` | Adds Oraculum progression for shared experience |
