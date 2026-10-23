@@ -1,0 +1,124 @@
+name: Publish Oraculum packages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-oraculum.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the verified plugins
+        uses: actions/checkout@v4
+
+      - name: Download verified BepInEx 5 (Windows x64)
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 \
+            'https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.3/BepInEx_win_x64_5.4.23.3.zip' \
+            --output /tmp/BepInEx_win_x64_5.4.23.3.zip
+          echo '41a089e5b1b1f0713b331346baf6677b1184c69eabebf51101097954e854c749  /tmp/BepInEx_win_x64_5.4.23.3.zip' | sha256sum --check
+          curl --fail --location --retry 3 \
+            'https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt' \
+            --output /tmp/BEPINEX-LICENSE-LGPL-2.1.txt
+
+      - name: Build and check the ZIP downloads
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile, ZIP_DEFLATED
+          import hashlib
+
+          expected = (
+              "AttributeRarity.dll",
+              "AttributeRerolls.dll",
+              "AttributeWeight.dll",
+              "BallistaKillReport.dll",
+              "BallistaUpgrade.dll",
+              "FairCorpses.dll",
+              "ItemRarity.dll",
+              "ItemWeight.dll",
+              "ProtanDangerOverlay.dll",
+              "SharedExperienceBalance.dll",
+              "ShopRefreshPricing.dll",
+              "ShopVisualSort.dll",
+          )
+          plugins = Path("plugins")
+          found = {p.name for p in plugins.glob("*.dll")}
+          assert found == set(expected), f"Unexpected plugin set: {found ^ set(expected)}"
+          Path("dist").mkdir(exist_ok=True)
+
+          instructions = """Oraculum Expanded & Other Improvements
+
+          COMPLETE PACKAGE (Windows x64)
+          1. In Steam, right-click The Last Spell > Manage > Browse local files.
+          2. Extract Oraculum_Expanded_Complete.zip into that game folder.
+          3. Launch the game.
+
+          The Complete ZIP contains BepInEx 5.4.23.3 (Windows x64) and all 12 plugins.
+          If a feature is unwanted, delete its DLL from BepInEx/plugins/.
+
+          PLUGINS ONLY
+          If BepInEx 5 is already installed, extract Oraculum_Expanded_Plugins_Only.zip
+          into your The Last Spell game folder.
+
+          BepInEx is licensed under LGPL-2.1.
+          Source: https://github.com/BepInEx/BepInEx
+          Project: https://github.com/demetrio70-bot/the-last-spell
+          """
+          upstream = Path("/tmp/BepInEx_win_x64_5.4.23.3.zip")
+          license_file = Path("/tmp/BEPINEX-LICENSE-LGPL-2.1.txt")
+          out_full = Path("dist/Oraculum_Expanded_Complete.zip")
+          out_only = Path("dist/Oraculum_Expanded_Plugins_Only.zip")
+          with ZipFile(out_full, "w", ZIP_DEFLATED, compresslevel=9) as dest:
+              with ZipFile(upstream) as src:
+                  for info in src.infolist():
+                      if info.is_dir():
+                          continue
+                      name = info.filename.replace("\\", "/")
+                      assert not name.startswith("/") and ".." not in name.split("/"), name
+                      dest.writestr(name, src.read(info))
+              for dll in expected:
+                  dest.write(plugins / dll, f"BepInEx/plugins/{dll}")
+              dest.writestr("INSTALL_ORACULUM.txt", instructions)
+              dest.write(license_file, "BEPINEX-LICENSE-LGPL-2.1.txt")
+          with ZipFile(out_only, "w", ZIP_DEFLATED, compresslevel=9) as dest:
+              for dll in expected:
+                  dest.write(plugins / dll, f"BepInEx/plugins/{dll}")
+              dest.writestr("INSTALL_ORACULUM.txt", instructions)
+          for p in (out_full, out_only):
+              with ZipFile(p) as z:
+                  assert z.testzip() is None
+                  contents = set(z.namelist())
+                  assert {f"BepInEx/plugins/{x}" for x in expected} <= contents
+                  if p == out_full:
+                      assert {"doorstop_config.ini", "winhttp.dll", "BEPINEX-LICENSE-LGPL-2.1.txt"} <= contents
+              print(f"{p}: {p.stat().st_size:,} bytes, SHA256 {hashlib.sha256(p.read_bytes()).hexdigest()}")
+          PY
+
+      - name: Publish version v1.0.0 to GitHub Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cat > dist/RELEASE_NOTES.md <<'EOF'
+          First public release of Oraculum Expanded & Other Improvements.
+
+          - **Oraculum_Expanded_Complete.zip:** BepInEx 5.4.23.3 (Windows x64) and the 12 plugins. Extract directly into the game's installation folder.
+          - **Oraculum_Expanded_Plugins_Only.zip:** only the 12 plugins, for users who already installed BepInEx 5.
+
+          See the repository README for features and instructions. This is a manual installation; subscribing on Steam Workshop does not install the DLLs.
+          EOF
+          gh release create v1.0.0 \
+            dist/Oraculum_Expanded_Complete.zip \
+            dist/Oraculum_Expanded_Plugins_Only.zip \
+            --target "$GITHUB_SHA" \
+            --title "Oraculum Expanded & Other Improvements v1.0.0" \
+            --notes-file dist/RELEASE_NOTES.md
