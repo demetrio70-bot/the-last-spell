@@ -29,7 +29,7 @@ A collection of mods for **The Last Spell** that expands Oraculum progression, i
 
 ## Installation
 
-**Requirement:** BepInEx 5 (64-bit) installed for *The Last Spell*.
+**Requirement:** [BepInEx 5 (Windows x64)](https://github.com/BepInEx/BepInEx/releases). Download the Windows x64 ZIP, extract its contents into *The Last Spell*'s game folder (next to the game's `.exe`), then launch and close the game once.
 
 1. Click **Code → Download ZIP** on this page and extract the ZIP file.
 2. Open the extracted `plugins` folder.
