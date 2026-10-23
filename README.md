@@ -4,8 +4,6 @@ A modular collection of **The Last Spell** gameplay-balance and quality-of-life 
 
 This is an **unofficial community project**, not affiliated with Ishtar Games or The Arcade Crew.
 
-> **Release status:** The GitHub upload is in progress. Please check that all 12 DLLs listed below are present before downloading the collection.
-
 ## Installation (Windows / Steam)
 
 **Required:** A working installation of **BepInEx 5 (64-bit)** for The Last Spell. These are BepInEx plugins, **not standalone Steam Workshop files**.
