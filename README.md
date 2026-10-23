@@ -29,14 +29,14 @@ A collection of mods for **The Last Spell** that expands Oraculum progression, i
 
 ## Installation (Windows)
 
-**Recommended — Complete package (BepInEx included):**
+**Recommended — Complete Package (BepInEx included):**
 
-1. [Download the Complete ZIP](downloads/Oraculum_Expanded_Complete.zip).
+1. [Download the Oraculum Expanded](https://github.com/demetrio70-bot/the-last-spell/raw/refs/heads/main/downloads/Oraculum_Expanded_Complete.zip).
 2. In Steam, right-click *The Last Spell* → **Manage → Browse local files**.
 3. Extract the ZIP contents directly into the game folder.
-4. Launch the game.
+4. Launch the game. Enjoy!
 
-**Already have BepInEx 5 installed?** Download the [Plugins Only ZIP](downloads/Oraculum_Expanded_Plugins_Only.zip) and extract it into the same game folder instead.
+**Already have BepInEx 5 installed?** Download the [Plugins Only](https://github.com/demetrio70-bot/the-last-spell/raw/refs/heads/main/downloads/Oraculum_Expanded_Plugins_Only.zip) and extract it into the same game folder instead.
 
 **Note:** Subscribing on Steam Workshop does not install these DLLs; download one of the ZIP files above.
 
