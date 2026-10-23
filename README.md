@@ -27,15 +27,17 @@ A collection of mods for **The Last Spell** that expands Oraculum progression, i
 
 **Don't want a feature?** Simply delete its corresponding `.dll` file from the `BepInEx/plugins/` folder.
 
-## Installation
+## Installation (Windows)
 
-**Requirement:** [BepInEx 5 (Windows x64)](https://github.com/BepInEx/BepInEx/releases). Download the Windows x64 ZIP, extract its contents into *The Last Spell*'s game folder (next to the game's `.exe`), then launch and close the game once.
+**Recommended — Complete package (BepInEx included):**
 
-1. Click **Code → Download ZIP** on this page and extract the ZIP file.
-2. Open the extracted `plugins` folder.
-3. Copy the `.dll` files into your game's `BepInEx/plugins/` folder.
+1. [Download the Complete ZIP](downloads/Oraculum_Expanded_Complete.zip).
+2. In Steam, right-click *The Last Spell* → **Manage → Browse local files**.
+3. Extract the ZIP contents directly into the game folder.
 4. Launch the game.
 
-**Steam users:** To find the game folder, right-click *The Last Spell* in your Library and select **Manage → Browse local files**.
+**Already have BepInEx 5 installed?** Download the [Plugins Only ZIP](downloads/Oraculum_Expanded_Plugins_Only.zip) and extract it into the same game folder instead.
+
+**Note:** Subscribing on Steam Workshop does not install these DLLs; download one of the ZIP files above.
 
 **Uninstall:** Remove the corresponding `.dll` files from `BepInEx/plugins/`.
