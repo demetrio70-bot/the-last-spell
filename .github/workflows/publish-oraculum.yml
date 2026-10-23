@@ -103,6 +103,20 @@ jobs:
               print(f"{p}: {p.stat().st_size:,} bytes, SHA256 {hashlib.sha256(p.read_bytes()).hexdigest()}")
           PY
 
+      - name: Commit downloadable ZIP packages to the repository
+        run: |
+          set -euo pipefail
+          mkdir -p downloads
+          cp dist/Oraculum_Expanded_Complete.zip downloads/
+          cp dist/Oraculum_Expanded_Plugins_Only.zip downloads/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add downloads/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish Oraculum complete and plugins-only archives'
+            git push origin HEAD:main
+          fi
+
       - name: Publish version v1.0.0 to GitHub Releases
         env:
           GH_TOKEN: ${{ github.token }}
@@ -116,6 +130,10 @@ jobs:
 
           See the repository README for features and instructions. This is a manual installation; subscribing on Steam Workshop does not install the DLLs.
           EOF
+          if gh release view v1.0.0 >/dev/null 2>&1; then
+            gh release upload v1.0.0 dist/Oraculum_Expanded_Complete.zip dist/Oraculum_Expanded_Plugins_Only.zip --clobber
+            exit 0
+          fi
           gh release create v1.0.0 \
             dist/Oraculum_Expanded_Complete.zip \
             dist/Oraculum_Expanded_Plugins_Only.zip \
