@@ -8,6 +8,25 @@ A collection of mods for **The Last Spell** that expands Oraculum progression, i
 - **Balance improvements:** Adjustments to item and attribute weights.
 - **Quality of life:** Shop sorting, ballista kill reports, and a color-vision accessibility overlay.
 
+### Included plugins
+
+| DLL | Description |
+| --- | --- |
+| `AttributeRarity.dll` | Expands Oraculum attribute-rarity progression |
+| `AttributeRerolls.dll` | Expands Oraculum attribute reroll progression |
+| `AttributeWeight.dll` | Rebalances the weights of individual attributes |
+| `BallistaKillReport.dll` | Displays ballista kill information |
+| `BallistaUpgrade.dll` | Expands Oraculum ballista upgrade progression |
+| `FairCorpses.dll` | Expands Oraculum corpse-generation progression |
+| `ItemRarity.dll` | Expands Oraculum item-rarity progression |
+| `ItemWeight.dll` | Rebalances item weights |
+| `ProtanDangerOverlay.dll` | Adds a color-vision accessibility overlay |
+| `SharedExperienceBalance.dll` | Adds Oraculum progression for shared experience |
+| `ShopRefreshPricing.dll` | Adds Oraculum progression for shop refresh costs |
+| `ShopVisualSort.dll` | Adds visual category sorting to the shop |
+
+**Don't want a feature?** Simply delete its corresponding `.dll` file from the `BepInEx/plugins/` folder.
+
 ## Installation
 
 **Requirement:** BepInEx 5 (64-bit) installed for *The Last Spell*.
